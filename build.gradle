@@ -24,7 +24,9 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
-	implementation 'com.h2database:h2'
+
+	implementation 'org.postgresql:postgresql'
+	implementation 'org.liquibase:liquibase-core'
 
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'

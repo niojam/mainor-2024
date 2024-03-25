@@ -7,6 +7,6 @@ public class CreateProductRequest {
 
     private String name;
     private String description;
-    private String superSecret;
+    private Integer price;
 
 }

@@ -3,30 +3,45 @@ package ee.mainor.demo.service;
 import ee.mainor.demo.dto.CreateProductRequest;
 import ee.mainor.demo.dto.ProductDto;
 import ee.mainor.demo.mapper.ProductMapper;
-import ee.mainor.demo.model.User;
-import ee.mainor.demo.repository.UserRepository;
+import ee.mainor.demo.model.Product;
+import ee.mainor.demo.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Random;
 
 
 @Service
 @RequiredArgsConstructor
 public class ProductService {
 
-    private final UserRepository userRepository;
-    private final Random random = new Random();
+    private final ProductRepository productRepository;
 
     public ProductDto create(CreateProductRequest createProductRequest) {
-        // saving goes here
-        ProductDto productDto = ProductMapper.toDto(createProductRequest);
-        productDto.setId(1L);
+        Product product = ProductMapper.toEntity(createProductRequest);
+        return ProductMapper.toDto(productRepository.save(product));
+    }
 
-        int price = createProductRequest.getName().length();
-        productDto.setPrice(price);
-        return productDto;
+    public ProductDto update(Long id, ProductDto productDto) {
+        Product product = ProductMapper.updateEntity(productDto, requireProduct(id));
+
+        return ProductMapper.toDto(productRepository.save(product));
+    }
+
+    public List<ProductDto> getAll() {
+        return productRepository.findAll()
+                .stream()
+                .map(ProductMapper::toDto)
+                .toList();
+    }
+
+    public ProductDto findById(Long id) {
+        Product product = requireProduct(id);
+        return ProductMapper.toDto(product);
+    }
+
+    private Product requireProduct(Long id) {
+        return productRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("product not dount"));
     }
 
 }
