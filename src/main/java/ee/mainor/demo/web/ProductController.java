@@ -31,6 +31,11 @@ public class ProductController {
         return productService.findById(id);
     }
 
+    @GetMapping("search")
+    public List<ProductDto> findById(@RequestParam String name) {
+        return productService.findByAllByName(name);
+    }
+
     @GetMapping
     public List<ProductDto> getAll() {
         return productService.getAll();

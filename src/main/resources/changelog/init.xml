@@ -17,5 +17,16 @@
         </sql>
     </changeSet>
 
+    <changeSet author="nikita.ojamae" id="create-game-table">
+        <sql splitStatements="false">
+            CREATE TABLE game
+            (
+                id          SERIAL PRIMARY KEY,
+                name        varchar(255) NOT NULL,
+                description varchar
+            );
+        </sql>
+    </changeSet>
+
 
 </databaseChangeLog>

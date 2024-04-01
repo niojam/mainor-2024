@@ -19,7 +19,8 @@ public class ProductService {
 
     public ProductDto create(CreateProductRequest createProductRequest) {
         Product product = ProductMapper.toEntity(createProductRequest);
-        return ProductMapper.toDto(productRepository.save(product));
+        Product saved = productRepository.save(product);
+        return ProductMapper.toDto(saved);
     }
 
     public ProductDto update(Long id, ProductDto productDto) {
@@ -39,6 +40,16 @@ public class ProductService {
         Product product = requireProduct(id);
         return ProductMapper.toDto(product);
     }
+
+    public List<ProductDto> findByAllByName(String name) {
+        List<Product> products = productRepository.findAllByName(name);
+        return products
+                .stream()
+                .map(ProductMapper::toDto)
+                .toList();
+
+    }
+
 
     private Product requireProduct(Long id) {
         return productRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("product not dount"));
