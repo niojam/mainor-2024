@@ -19,7 +19,7 @@ public class ProductIntegrationTest {
 
 
     @Test
-    public void wshouldCreateProduct() {
+    public void shouldCreateProduct() {
         CreateProductRequest createProductRequest = new CreateProductRequest();
         String name = "TestName";
         createProductRequest.setName(name);
